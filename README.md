@@ -39,14 +39,15 @@ O sistema processa dados brutos de partidas ranqueadas para identificar **padrõ
 O sistema segue uma arquitetura de **pipeline linear**, com forte ênfase em **Feature Engineering temporal**.
 
 ```mermaid
-graph TD
-    A[Ingestão de Dados<br/>(Riot API)] -->|ETL| B[(PostgreSQL)]
-    B --> C{Feature Engineering}
-    C -->|Rolling Windows<br/>+ Deltas Temporais| D[XGBoost Classifier]
-    D --> E[Módulo de Calibração]
-    E -->|Otimização Brier Score| F[PCA + K-Means]
-    F --> G[Motor Cognitivo<br/>(XAI / SHAP)]
-    G --> H[Relatório Final<br/>+ API]
+graph LR
+    A[Riot API] --> B[ETL Pipeline]
+    B --> C[(Database)]
+    C --> D[Temporal Feature Engineering]
+    D --> E[Supervised Model - XGBoost]
+    E --> F[Probability Calibration]
+    F --> G[Behavioral Clustering]
+    G --> H[Explainability Engine]
+    H --> I[Insights API]
 
 Componentes Técnicos
 
