@@ -1,189 +1,165 @@
-🎮 LOL Analytics PhD — AI Coach & Match Intelligence Platform
+# 🎮 LOL Analytics PhD — AI Coach & Match Intelligence Platform
 
-Plataforma avançada de análise de desempenho em League of Legends, que combina Machine Learning Supervisionado, Calibração Probabilística, Clusterização Comportamental e Interpretabilidade (XAI) para gerar insights acionáveis por jogador, rota e contexto de partida.
+Plataforma avançada de **análise de desempenho em League of Legends**, que combina **Machine Learning Supervisionado**, **Calibração Probabilística**, **Clusterização Comportamental** e **Interpretabilidade (XAI)** para gerar **insights acionáveis por jogador, rota e contexto de partida**.
 
-🔬 Diferencial Científico: Ao contrário de ferramentas estatísticas comuns (que olham apenas para KDA ou Winrate), este projeto avalia o impacto marginal de cada jogador na probabilidade real de vitória, utilizando engenharia de dados robusta e rigor acadêmico.
+🔬 **Diferencial Científico**  
+Ao contrário de ferramentas estatísticas tradicionais (focadas apenas em KDA ou winrate), este projeto estima o **impacto marginal real de cada jogador na probabilidade de vitória**, utilizando engenharia de dados robusta e rigor metodológico de nível acadêmico.
 
-🚀 Visão Geral do Projeto
+---
 
-O LOL Analytics PhD foi desenhado para simular a intuição de um coach humano experiente através de modelos matemáticos. O sistema processa dados brutos da partida para identificar padrões complexos de jogo.
+## 🚀 Visão Geral do Projeto
 
-Principais Capacidades:
+O **LOL Analytics PhD** foi projetado para simular a **intuição de um coach humano experiente** através de modelos matemáticos e estatísticos.  
+O sistema processa dados brutos de partidas ranqueadas para identificar **padrões complexos de tomada de decisão, impacto e consistência**.
 
-📊 Score de Impacto Normalizado (0–100): Uma métrica composta que avalia a eficiência do jogador relativa ao seu elo e campeão.
+### Principais Capacidades
 
-🧠 Predição Calibrada: Estimativa de probabilidade de vitória com calibração isotônica/sigmoide.
+- 📊 **Score de Impacto Normalizado (0–100)**  
+  Métrica composta que avalia a eficiência do jogador relativa ao seu **elo, campeão e função**.
 
-🎯 Avaliação Contextual: Considera o matchup específico, duração da partida e escalamento dos campeões.
+- 🧠 **Predição Calibrada de Vitória**  
+  Estimativa probabilística com **calibração isotônica/sigmoide**, garantindo confiabilidade estatística.
 
-🧩 Clusterização de Estilo de Jogo: Classificação não-supervisionada (K-Means) para identificar arquétipos de jogadores.
+- 🎯 **Avaliação Contextual**  
+  Considera **matchup direto, duração da partida, escalamento e pressão de mapa**.
 
-📉 Detecção de Anomalias: Identificação estatística de feeding intencional ou colapsos táticos.
+- 🧩 **Clusterização de Estilo de Jogo**  
+  Classificação não-supervisionada (K-Means) para identificação de **arquétipos comportamentais**.
 
-📝 Relatório Narrativo (NLG): Geração de feedback em linguagem natural explicativa.
+- 📉 **Detecção de Anomalias**  
+  Identificação estatística de **feeding, colapsos táticos e jogos fora do padrão esperado**.
 
-🧠 Arquitetura e Pipeline de Dados
+- 📝 **Relatório Narrativo (NLG)**  
+  Geração automática de feedback explicativo em **linguagem natural**, interpretável por humanos.
 
-O sistema segue uma arquitetura de pipeline linear com forte ênfase em Feature Engineering temporal.
+---
 
+## 🧠 Arquitetura e Pipeline de Dados
+
+O sistema segue uma arquitetura de **pipeline linear**, com forte ênfase em **Feature Engineering temporal**.
+
+```mermaid
 graph TD
-    A[Ingestão de Dados (Riot API)] -->|ETL| B(PostgreSQL)
+    A[Ingestão de Dados<br/>(Riot API)] -->|ETL| B[(PostgreSQL)]
     B --> C{Feature Engineering}
-    C -->|Rolling Windows + Deltas| D[XGBoost Model]
+    C -->|Rolling Windows<br/>+ Deltas Temporais| D[XGBoost Classifier]
     D --> E[Módulo de Calibração]
-    E -->|Brier Score Opt.| F[Clusterização (PCA + KMeans)]
-    F --> G[Motor Cognitivo (XAI/SHAP)]
-    G --> H[Relatório Final & API]
+    E -->|Otimização Brier Score| F[PCA + K-Means]
+    F --> G[Motor Cognitivo<br/>(XAI / SHAP)]
+    G --> H[Relatório Final<br/>+ API]
 
+Componentes Técnicos
 
-Componentes Técnicos:
+ETL & Ingestão
+Coletores assíncronos com controle de rate limit da Riot Games API.
 
-ETL & Ingestão: Coletores assíncronos otimizados para respeitar os rate limits da Riot Games.
+Pré-processamento
+Tratamento de outliers e criação de features baseadas em janelas deslizantes (ex: desempenho médio dos últimos N jogos).
 
-Pré-processamento: Tratamento de outliers e criação de features de janela deslizante (ex: ouro por minuto nos últimos 5 jogos).
+Modelagem
+Aprendizado supervisionado com XGBoost, otimização de hiperparâmetros e validação cruzada.
 
-Modelagem: Treinamento supervisionado com otimização de hiperparâmetros.
-
-Pós-processamento: Aplicação de regras de negócio e tradução dos vetores numéricos para texto legível.
+Pós-processamento
+Regras de negócio + tradução de vetores numéricos para diagnósticos interpretáveis.
 
 📊 Performance do Modelo e Validação
 
-O modelo foi validado em um dataset proprietário, garantindo robustez estatística.
+O modelo foi validado em um dataset proprietário, garantindo robustez estatística e generalização.
 
-Dataset: +144.000 partidas ranqueadas (Diamante+).
+Dataset: +144.000 partidas ranqueadas (Diamante+)
 
-Algoritmo: XGBoost Classifier.
+Algoritmo: XGBoost Classifier
 
-Métrica de Calibração (Brier Score): 0.1165 (Indica alta confiabilidade nas probabilidades previstas).
+Métrica de Calibração (Brier Score): 0.1165
 
-Métricas por Rota (Cross-Validation)
+Indica alta confiabilidade nas probabilidades previstas.
 
-Rota (Role)
-
-Accuracy
-
-F1-Score
-
-Observação
-
-JUNGLE
-
-87.2%
-
-0.87
-
-Maior previsibilidade devido ao impacto global no mapa.
-
-BOTTOM
-
-85.5%
-
-0.86
-
-Alta correlação com controle de dragões.
-
-UTILITY
-
-83.0%
-
-0.83
-
-Impacto medido via visão e controle de grupo (CC).
-
-MIDDLE
-
-81.6%
-
-0.82
-
-Alta variância mecânica.
-
-TOP
-
-79.0%
-
-0.79
-
-Rota de maior isolamento (menor impacto global imediato).
+| Rota    | Accuracy | F1-Score | Observação                                             |
+| ------- | -------- | -------- | ------------------------------------------------------ |
+| JUNGLE  | 87.2%    | 0.87     | Maior previsibilidade devido ao impacto global no mapa |
+| BOTTOM  | 85.5%    | 0.86     | Alta correlação com controle de dragões                |
+| UTILITY | 83.0%    | 0.83     | Impacto medido via visão e CC                          |
+| MIDDLE  | 81.6%    | 0.82     | Alta variância mecânica                                |
+| TOP     | 79.0%    | 0.79     | Rota mais isolada, menor impacto global imediato       |
 
 🧩 Arquétipos Comportamentais (Unsupervised Learning)
 
-Utilizando PCA (Análise de Componentes Principais) para redução de dimensionalidade seguida de K-Means Clustering, o sistema classifica jogadores em 4 perfis táticos:
+Utilizando PCA (Análise de Componentes Principais) para redução de dimensionalidade seguido de K-Means Clustering, o sistema classifica jogadores em quatro perfis táticos:
 
-🛡️ Controlador de Mapa: Foco em Visão, Rotação e Objetivos Neutros.
+🛡️ Controlador de Mapa
+Ênfase em visão, rotação e objetivos neutros.
 
-⚔️ Dominante de Recursos (Hyper-Carry): Alto Gold Share, DPM (Dano por Minuto) e Conversão de recursos.
+⚔️ Dominante de Recursos (Hyper-Carry)
+Alto gold share, DPM e conversão de vantagem.
 
-🧭 Facilitador Tático: Foco em CC (Controle de Grupo), Peel e Assistências.
+🧭 Facilitador Tático
+Foco em CC, peel e assistências estratégicas.
 
-🚀 Iniciador de Vanguarda: Alta mitigação de dano e iniciação de lutas (Engage).
+🚀 Iniciador de Vanguarda
+Alta mitigação de dano e iniciação de lutas (engage).
 
 📦 Estrutura do Repositório
-
 analytics-do-vale/
-├── api.py                 # Endpoints da API (FastAPI/Flask)
+├── api.py                 # Endpoints da API
 ├── app.py                 # Core lógico do AI Coach
-├── main.py                # Entry point da aplicação
+├── main.py                # Entry point
 │
-├── etl/                   # Pipeline de Engenharia de Dados
-│   ├── riot_collector.py  # Wrapper para Riot API
-│   └── monitor.py         # Monitoramento de jobs
+├── etl/                   # Pipeline de Dados
+│   ├── riot_collector.py
+│   └── monitor.py
 │
-├── features/              # Engenharia de Atributos
-│   ├── engine.py          # Transformação de dados brutos
-│   └── post_processing.py # Normalização
+├── features/              # Engenharia de Features
+│   ├── engine.py
+│   └── post_processing.py
 │
-├── models/                # Núcleo de Data Science
-│   ├── trainer.py         # Script de treino (XGBoost)
-│   ├── validation.py      # Cálculo de métricas e curvas ROC
-│   ├── calibration.py     # Calibração de probabilidades
-│   ├── clustering.py      # Definição de arquétipos
-│   └── coach.py           # Camada de regras de negócio
+├── models/                # Núcleo de ML
+│   ├── trainer.py
+│   ├── validation.py
+│   ├── calibration.py
+│   ├── clustering.py
+│   └── coach.py
 │
-├── templates/             # Front-end básico
+├── templates/
 │   └── report.html
 │
-└── tests/                 # Testes unitários e de integração
-
-
+└── tests/
 🔐 Configuração e Instalação
-
-Para executar o projeto localmente, siga os passos abaixo:
-
-Clone o repositório e instale as dependências:
-
-git clone [https://github.com/seu-usuario/analytics-do-vale.git](https://github.com/seu-usuario/analytics-do-vale.git)
+1️⃣ Clone e instale dependências
+git clone https://github.com/seu-usuario/analytics-do-vale.git
 cd analytics-do-vale
 pip install -r requirements.txt
 
+2️⃣ Configuração
 
-Configure as variáveis de ambiente:
-Crie um arquivo settings.yaml baseado no exemplo.
+Crie o arquivo de configuração local:
 
 cp settings.example.yaml settings.yaml
 
 
-Edite o settings.yaml:
+Edite conforme necessário:
 
-riot_api:
-  key: "RGAPI-XXXXXXXX-XXXX-XXXX"
+riot:
+  api_key: "RGAPI-XXXXXXXX-XXXX-XXXX"
+
 database:
   url: "postgresql://user:pass@localhost:5432/lol_analytics"
+
 model:
   threshold: 0.65
 
 
-⚠️ Nota de Segurança: O arquivo settings.yaml contém credenciais sensíveis e está listado no .gitignore.
+⚠️ Nota de Segurança
+O arquivo settings.yaml contém credenciais sensíveis e não deve ser versionado.
 
 🛠️ Stack Tecnológico
 
 Linguagem: Python 3.11
 
-Machine Learning: XGBoost, Scikit-learn, SHAP (Explainable AI)
+Machine Learning: XGBoost, Scikit-learn, SHAP
 
 Data Engineering: Pandas, NumPy, Joblib
 
-Data Source: Riot Games API (Wrapper customizado)
+Fonte de Dados: Riot Games API
 
 Banco de Dados: PostgreSQL
 
@@ -192,6 +168,4 @@ Banco de Dados: PostgreSQL
 Marcos Freire
 Engenharia de Computação — UNIVASF
 
-Projeto desenvolvido com foco em pesquisa de Machine Learning aplicado a e-sports, engenharia de features complexas e sistemas de suporte à decisão.
-
-LinkedIn | Portfólio
+Projeto desenvolvido com foco em Machine Learning aplicado a e-sports, engenharia de features complexas e sistemas inteligentes de suporte à decisão.
