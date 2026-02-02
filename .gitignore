@@ -1,0 +1,19 @@
+# Ambiente
+.venv/
+__pycache__/
+*.pyc
+
+# Configurações sensíveis
+settings.yaml
+
+# Artefatos de modelo (opcional manter só os leves)
+models/artifacts/*.pkl
+models/artifacts/*.joblib
+
+# Logs
+*.log
+
+# OS / Editor
+.DS_Store
+.vscode/
+.idea/
